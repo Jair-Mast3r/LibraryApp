@@ -1,9 +1,14 @@
 <script setup>
+import {ref} from "vue";
 
+const count = ref(0);
 </script>
 
 <template>
-<h1>Hello World!</h1>
+<div>
+    <h3>El contador actual es: {{count}}</h3>
+    <button type="button">Incrementar</button>
+</div>
 </template>
 
 <style scoped>
