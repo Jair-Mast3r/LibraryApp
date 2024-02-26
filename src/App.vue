@@ -19,7 +19,7 @@ function decrement() {
     <button @click="increment" type="button">Incrementar</button>
     <button @click="decrement" type="button">Decrementar</button>
     <h2 v-if="count >= 20">¡Lo lograste!</h2>
-    <h2 v-if="count < 20">¡Aún no lo logras!</h2>
+    <h2 v-else>¡Aún no lo logras!</h2>
 </div>
 </template>
 
