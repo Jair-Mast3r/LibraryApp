@@ -18,8 +18,12 @@ function decrement() {
     <h3 :class="{red: count > 10, green : count < 0}">El contador actual es: {{count}}</h3>
     <button @click="increment" type="button">Incrementar</button>
     <button @click="decrement" type="button">Decrementar</button>
+    <h2 v-if="count >= 20">¡Lo lograste!</h2>
+    <h2 v-if="count < 20">¡Aún no lo logras!</h2>
 </div>
 </template>
+
+
 
 <style scoped>
 .red{
