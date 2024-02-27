@@ -40,15 +40,13 @@ const pageShown = ref("about-us");
 
     <!-- Contenido de la app -->
     <div v-else>
-        <!-- Página de acerca de nosotros -->
-        <!-- Página de reseñas -->
         <nav>
             <h2>MyBooksApp</h2>
             <div>
                 <span @click="pageShown = 'about-us'">Acerca de nosotros</span>
                 <span @click="pageShown = 'explore'">Explorar</span>
                 <span @click="pageShown = 'reviews'">Reseñas</span>
-                <span>Cerrar sesión</span>
+                <span @click="isLoginShown = true">Cerrar sesión</span>
             </div>
         </nav>
         <!-- Páginas-->
@@ -96,6 +94,9 @@ nav {
 
 nav > div > span {
     margin-right: 20px;
+}
+nav > div > span:hover {
+    color:aliceblue;
 }
 
 </style>
