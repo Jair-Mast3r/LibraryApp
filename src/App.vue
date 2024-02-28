@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue"
 import LoginPage from "./pages/LoginPage.vue"
+import NavBar from "./components/NavBar.vue"
 
 const isLoginShown = ref(true);
 
@@ -8,6 +9,9 @@ const isLoginShown = ref(true);
 // pageShown ("about-us" | "explore" "reviews")
 const pageShown = ref("about-us");
 
+function changePage(page) {
+    pageShown.value = page;
+}
 </script>
 
 <template>
@@ -16,15 +20,8 @@ const pageShown = ref("about-us");
 
     <!-- Contenido de la app -->
     <div v-else>
-        <nav>
-            <h2>MyBooksApp</h2>
-            <div>
-                <span @click="pageShown = 'about-us'">Acerca de nosotros</span>
-                <span @click="pageShown = 'explore'">Explorar</span>
-                <span @click="pageShown = 'reviews'">Reseñas</span>
-                <span @click="isLoginShown = true">Cerrar sesión</span>
-            </div>
-        </nav>
+        <!-- Navbar -->
+        <NavBar @change-page="changePage" @hide-login="isLoginShown = true"/>
         <!-- Páginas-->
         <section class="about-us-container" v-if="pageShown === 'about-us'">
             <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2F1.bp.blogspot.com%2F-ndb804mc9ns%2FTzqxOSm1CWI%2FAAAAAAAAE90%2FCGRsfd7aYFk%2Fs1600%2Fvariedad_libros_exportados_importados.jpg&f=1&nofb=1&ipt=108e85301b73b7b01dc159b533e48b3f854cfd57548966986a3a2a736a55b6d0&ipo=images" alt="">
@@ -43,22 +40,6 @@ const pageShown = ref("about-us");
 
 
 <style scoped>
-/* Navbar */
-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: gainsboro;
-    width: 100%;
-}
-
-nav > div > span {
-    margin-right: 20px;
-}
-nav > div > span:hover {
-    color:aliceblue;
-}
-
 /* Acerca de nosotros */
 .about-us-container {
     margin: auto;
