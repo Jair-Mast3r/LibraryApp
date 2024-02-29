@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import BookCard from "../components/BookCard.vue";
 
 const books = ref([]);
 
@@ -34,17 +35,10 @@ onMounted(getBooks);
 </script>
 <template>
     <section>
-        <h2>Explorar libros</h2>
+        <h2>Explorar Libros</h2>
         <div>
-            <div v-for="book in books" class="book-card">
-                <img :src="book.image" alt="" width="100px"/>
-            
-            <div>
-                <p>Titulo: {{ book.title }}</p>
-                <p>Subtítulo: {{ book.subtitle }}</p>
-                <p>Autores: {{ book.authors }}</p>    
-            </div>
-            </div>
+            <!-- Una sola instancia de un libro -->
+            <BookCard v-for="_book in books" :book="_book"/>
         </div>
     </section>
 </template>
