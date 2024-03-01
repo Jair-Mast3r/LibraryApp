@@ -1,6 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import BookCard from "../components/BookCard.vue";
+import BookDetail from "../components/BookDetail.vue";
+
+const selectedBookId = ref();
 
 const books = ref([]);
 
@@ -15,32 +18,18 @@ async function getBooks() {
 
 onMounted(getBooks);
 
-// const books = [
-//     {
-//         title: "A",
-//         subtitle: "este es el libro A",
-//         authors: "autor principal"
-//     },
-//     {
-//         title: "B",
-//         subtitle: "este es otro libro",
-//         authors: "autor 2"
-//     },
-//     {
-//         title: "C",
-//         subtitle: "el tercer libro",
-//         authors: "autro 1"
-//     },
-// ]
 </script>
 <template>
-    <section>
+    <!-- Lista de libros -->
+    <section v-if="!selectedBookId">
         <h2>Explorar Libros</h2>
         <div>
             <!-- Una sola instancia de un libro -->
-            <BookCard v-for="_book in books" :book="_book"/>
+            <BookCard @click="selectedBookId = _book.id" v-for="_book in books" :book="_book"/>
         </div>
     </section>
+    <!-- Detalle de un libro -->
+    <BookDetail v-else/>
 </template>
 
 <style>

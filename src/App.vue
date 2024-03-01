@@ -5,7 +5,7 @@ import NavBar from "./components/NavBar.vue"
 import ExplorePage from "./pages/ExplorePage.vue"
 import AboutUs from "./pages/AboutUs.vue";
 
-const isLoginShown = ref(true);
+const isLoginShown = ref(false);
 
 // Navbar
 // pageShown ("about-us" | "explore" "reviews")
