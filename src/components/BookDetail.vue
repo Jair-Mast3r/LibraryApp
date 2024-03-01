@@ -17,8 +17,8 @@ onMounted(getBook);
 <template>
     <section><h2>Detalle del libro</h2></section>
     <div class="detail-container">
-        <img src="" alt="">
-        <div>
+        <img class="img" :src="book?.image" alt="" />
+        <div class="book-detial-container">
             <p><span>Título: {{ book?.title }}</span></p>
             <p><span>Subtítulo: {{ book?.subtitle }}</span></p>
             <p><span>Autores: {{ book?.authors }}</span></p>
@@ -52,7 +52,15 @@ img {
     width: 50%;
 }
 
+.book-detial-container {
+    
+}
+
 span {
     font-weight: 600px;
+}
+
+.img {
+    width: 100px;
 }
 </style>
