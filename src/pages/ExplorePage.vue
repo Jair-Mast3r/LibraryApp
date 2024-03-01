@@ -44,17 +44,5 @@ onMounted(getBooks);
 </template>
 
 <style>
-.book-card {
-    margin: 20px auto;
-    width: 80%;
 
-}
-
-.book-card > img{
-
-}
-
-.book-card > div{
-
-}
 </style>
