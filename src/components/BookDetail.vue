@@ -1,5 +1,17 @@
 <script setup>
+import { onMounted, ref } from "vue";
+const props = defineProps(['selectedBookId']);
 
+const book = ref();
+
+async function getBook() {
+    const request = await fetch("https://www.dbooks.org/api/book/" + props.selectedBookId);
+    const response = await request.json();
+    //Asignar la información de una variable
+    book.value = response;
+}
+
+onMounted(getBook);
 </script>
 
 <template>
@@ -7,14 +19,14 @@
     <div class="detail-container">
         <img src="" alt="">
         <div>
-            <p><span>Título</span></p>
-            <p><span>Subtítulo: </span></p>
-            <p><span>Autores: </span></p>
-            <p><span>Páginas: </span></p>
-            <p><span>Año de publicación: </span></p>
-            <p><span>Editorial: </span></p>
+            <p><span>Título: {{ book?.title }}</span></p>
+            <p><span>Subtítulo: {{ book?.subtitle }}</span></p>
+            <p><span>Autores: {{ book?.authors }}</span></p>
+            <p><span>Páginas: {{ book?.pages }}</span></p>
+            <p><span>Año de publicación: {{ book?.year }}</span></p>
+            <p><span>Editorial: {{ book?.publisher }}</span></p>
             <button type="button">Descargar</button>
-            <button type="button">Cerrar Reseña</button>
+            <button type="button">Crear Reseña</button>
         </div>
     </div>
     <div>

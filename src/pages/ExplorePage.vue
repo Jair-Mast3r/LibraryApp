@@ -29,7 +29,7 @@ onMounted(getBooks);
         </div>
     </section>
     <!-- Detalle de un libro -->
-    <BookDetail v-else/>
+    <BookDetail :selected-book-id="selectedBookId" v-else/>
 </template>
 
 <style>
