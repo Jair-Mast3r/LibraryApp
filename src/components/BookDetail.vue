@@ -1,5 +1,9 @@
 <script setup>
 import { onMounted, ref } from "vue";
+
+// Ocultar detalle
+const emits = defineEmits(["hideDetail"]);
+
 const props = defineProps(['selectedBookId']);
 
 const book = ref();
@@ -15,7 +19,9 @@ onMounted(getBook);
 </script>
 
 <template>
-    <section><h2>Detalle del libro</h2></section>
+    <section>
+    <button type="button" @click="emits('hideDetail')">Atrás</button>    
+    <h2>Detalle del libro</h2></section>
     <div class="detail-container">
         <img class="img" :src="book?.image" alt="" />
         <div class="book-detial-container">
@@ -53,7 +59,7 @@ img {
 }
 
 .book-detial-container {
-    
+
 }
 
 span {
