@@ -1,5 +1,12 @@
 <script setup>
-const emits = defineEmits(['changePage', "hideLogin"]);
+import { signOut } from "firebase/auth";
+import { auth } from "@/firebase.js"
+const emits = defineEmits(['changePage']);
+
+async function singingOut() {
+    await signOut(auth);
+    alert("Sesión cerrada exitosamente")
+}
 </script>
 
 <template>
@@ -9,7 +16,7 @@ const emits = defineEmits(['changePage', "hideLogin"]);
                 <span @click="emits('changePage', 'about-us')">Acerca de nosotros</span>
                 <span @click="emits('changePage', 'explore')">Explorar</span>
                 <span @click="emits('changePage', 'reviews')">Reseñas</span>
-                <span @click="emits('hideLogin')">Cerrar sesión</span>
+                <span @click="singingOut">Cerrar sesión</span>
             </div>
         </nav>
 </template>
