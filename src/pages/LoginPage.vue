@@ -14,6 +14,7 @@ const password = ref();
 async function login() {
     try {
         await signInWithEmailAndPassword(auth, email.value, password.value);
+        emits("hide-login")
     } catch (e) {
         alert('Ocurrió un error ${e.message}');
     }
@@ -22,9 +23,9 @@ async function login() {
 async function signup() {
     try {
         await createUserWithEmailAndPassword(auth, email.value, password.value);
-        alert("Cuenta creada exitosamente") 
+        alert("Cuenta creada exitosamente");
     } catch (e) {
-        alert("Ocurrió un error ${e.message}")
+        alert(`${e.message}`);
     }
 }
 </script>
@@ -32,7 +33,7 @@ async function signup() {
 <template>
   <div class="login-container">
         <h1>Login</h1>
-        <form @submit.prevent="login">
+        <form @submit.prevent>
             <div>
                 <label for="">Email</label>
                 <br>
@@ -44,7 +45,8 @@ async function signup() {
                 <input v-model="password" type="text" name="password">
             </div>
             <br>
-            <button class="button" type="submit">Ingresar</button>
+            <button class="button" @click="login">Ingresar</button>
+            <button class="button" @click="signup">Crear cuenta</button>
         </form>
     </div>
 
