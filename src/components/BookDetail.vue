@@ -20,10 +20,13 @@ onMounted(getBook);
 
 <template>
     <section>
-    <button type="button" @click="emits('hideDetail')">Atrás</button>    
-    <h2>Detalle del libro</h2></section>
+        <button type="button" @click="emits('hideDetail')">Atrás</button>
+        <h2>Detalle del libro</h2>
+    </section>
     <div class="detail-container">
-        <img class="img" :src="book?.image" alt="" />
+        <div>
+            <img class="img" :src="book?.image" alt="" />
+        </div>
         <div class="book-detial-container">
             <p><span>Título: {{ book?.title }}</span></p>
             <p><span>Subtítulo: {{ book?.subtitle }}</span></p>
@@ -31,12 +34,16 @@ onMounted(getBook);
             <p><span>Páginas: {{ book?.pages }}</span></p>
             <p><span>Año de publicación: {{ book?.year }}</span></p>
             <p><span>Editorial: {{ book?.publisher }}</span></p>
-            <button type="button">Descargar</button>
-            <button type="button">Crear Reseña</button>
+            <div>
+                <a :href="book?.download" type="button">Descargar</a>
+                <button type="button">Crear Reseña</button>
+            </div>
         </div>
     </div>
     <div>
-        <p><span>Descripción: </span> Lorem ipsum dolor sit, amet consectetur adipisicing elit. In asperiores vitae facere sequi numquam. Ad voluptas iure voluptatem id animi asperiores, ipsam placeat velit facilis veniam soluta, natus repellendus quia!</p>
+        <p><span>Descripción: </span> Lorem ipsum dolor sit, amet consectetur adipisicing elit. In asperiores vitae facere
+            sequi numquam. Ad voluptas iure voluptatem id animi asperiores, ipsam placeat velit facilis veniam soluta, natus
+            repellendus quia!</p>
     </div>
 </template>
 
@@ -45,28 +52,19 @@ h2 {
     text-align: center;
     font-weight: 600;
 }
-detail-container {
-    margin-top: 30px;
+
+.detail-container{
     display: flex;
+    margin: auto;
 }
 
-img {
-    width: 50%;
-}
-
-.detail-container > div{
-    width: 50%;
-}
-
-.book-detial-container {
-
-}
+.book-detial-container {}
 
 span {
     font-weight: 600px;
 }
 
 .img {
-    width: 100px;
+    width: 160px;
 }
 </style>
