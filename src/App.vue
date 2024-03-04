@@ -1,11 +1,24 @@
 <script setup>
-import { ref } from "vue"
+import { ref, onMounted, computed } from "vue"
 import LoginPage from "./pages/LoginPage.vue"
 import NavBar from "./components/NavBar.vue"
 import ExplorePage from "./pages/ExplorePage.vue"
 import AboutUs from "./pages/AboutUs.vue";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebase.js"
 
-const isLoginShown = ref(true);
+const isUserAuthenticated = computed(() => user.value !== null);
+const user = ref(null);
+
+onMounted(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+        if (currentUser !== null) {
+            user.value = currentUser;
+        } else {
+            user.value = null;
+        }
+    })
+})
 
 // Navbar
 // pageShown ("about-us" | "explore" "reviews")
@@ -18,18 +31,18 @@ function changePage(page) {
 
 <template>
     <!-- Login -->
-    <LoginPage @hide-login="isLoginShown = false" v-if="isLoginShown === true"/>
+    <LoginPage @hide-login="isUserAuthenticated = false" v-if="isUserAuthenticated === false"/>
 
     <!-- Contenido de la app -->
     <div v-else>
         <!-- Navbar -->
-        <NavBar @change-page="changePage" @hide-login="isLoginShown = true"/>
+        <NavBar @change-page="changePage" @hide-login="isUserAuthenticated = true"/>
         <!-- Páginas-->
         <section class="about-us-container" v-if="pageShown === 'about-us'">
-            <AboutUs v-if="pageShown === 'about-us'" @hide-login="isLoginShown = true"/>
+            <AboutUs v-if="pageShown === 'about-us'" @hide-login="isUserAuthenticated = true"/>
         </section>
         
-        <ExplorePage v-if="pageShown === 'explore'" @hide-login="isLoginShown = true"/>
+        <ExplorePage v-if="pageShown === 'explore'" @hide-login="isUserAuthenticated = true"/>
 
         <section v-if="pageShown === 'reviews'">
             <h2>Reseñas</h2>
