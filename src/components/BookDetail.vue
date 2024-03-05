@@ -1,5 +1,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import { firestore, auth } from "@/firebase.js";
+import { collection, addDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+
+const user = ref(null);
 
 // Ocultar detalle
 const emits = defineEmits(["hideDetail"]);
@@ -15,7 +20,14 @@ async function getBook() {
     book.value = response;
 }
 
-onMounted(getBook);
+onMounted(() => {
+    getBook();
+    onAuthStateChanged(auth, (currentUser) => {
+        user.value = currentUser;
+    })
+});
+
+
 
 const reviews = ref([]);
 const newReview = ref("");
@@ -25,7 +37,19 @@ async function getReviews() {
 }
 
 async function submitReview() {
-  // TODO: Lógica para enviar una reseña
+  try {
+    const reviewRef = collection(firestore, "reviews");
+  await addDoc(reviewRef, {
+    userId: user.value.uid,
+    userEmail: user.value.email,
+    bookId: props.selectedBookId,
+    content: newReview.value,
+  })
+    alert("Reseña enviada")
+  } catch (e) {
+    alert(`Error al agregar documento: ${e.message}`)
+  }
+   
 }
 </script>
 
