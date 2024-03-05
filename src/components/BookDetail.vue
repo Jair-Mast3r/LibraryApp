@@ -16,6 +16,17 @@ async function getBook() {
 }
 
 onMounted(getBook);
+
+const reviews = ref([]);
+const newReview = ref("");
+
+async function getReviews() {
+  // TODO: Lógica para traer las reseñas de un libro
+}
+
+async function submitReview() {
+  // TODO: Lógica para enviar una reseña
+}
 </script>
 
 <template>
@@ -45,6 +56,26 @@ onMounted(getBook);
             sequi numquam. Ad voluptas iure voluptatem id animi asperiores, ipsam placeat velit facilis veniam soluta, natus
             repellendus quia!</p>
     </div>
+    <div>
+  <h2>Reseñas</h2>
+  <div
+    v-for="review in reviews"
+    :key="review.id"
+    v-show="reviews.length"
+    class="review"
+  >
+    <p>{{ review.userEmail }}</p>
+    <p>{{ review.content }}</p>
+  </div>
+  <div v-show="!reviews.length">No hay reseñas</div>
+  <form @submit.prevent="submitReview">
+    <textarea
+      :placeholder="`Escribe una reseña para ${book?.title}`"
+      v-model="newReview"
+    />
+    <button type="submit">Enviar</button>
+  </form>
+</div>
 </template>
 
 <style scoped>
@@ -66,5 +97,38 @@ span {
 
 .img {
     width: 160px;
+}
+form {
+   margin-top: 20px;
+}
+form > textarea {
+   width: 100%;
+   padding: 10px;
+   border-radius: 10px;
+   border: 1px solid rgb(209, 209, 209);
+   margin-bottom: 10px;
+   font-family: "Poppins", sans-serif;
+}
+form > button {
+   cursor: pointer;
+   border: 0;
+   padding: 10px 20px;
+   border-radius: 5px;
+   background-color: rgb(69, 146, 247);
+   color: white;
+   font-weight: bold;
+}
+.review {
+   margin-top: 20px;
+   padding: 10px;
+   background-color: rgb(242, 242, 242);
+   border-radius: 10px;
+}
+.review > p {
+   margin-bottom: 5px;
+}
+.review > p:first-of-type {
+   font-weight: bold;
+   font-size: small;
 }
 </style>
