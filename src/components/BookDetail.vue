@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { firestore, auth } from "@/firebase.js";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 const user = ref(null);
@@ -22,6 +22,7 @@ async function getBook() {
 
 onMounted(() => {
     getBook();
+    getReviews();
     onAuthStateChanged(auth, (currentUser) => {
         user.value = currentUser;
     })
@@ -33,7 +34,17 @@ const reviews = ref([]);
 const newReview = ref("");
 
 async function getReviews() {
-  // TODO: Lógica para traer las reseñas de un libro
+  try {
+    const reviewRef = collection(firestore, "reviews");
+    const docsSnapshot = await getDocs(reviewRef);
+    reviews.value = docsSnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+    }));
+    await getReviews();
+  } catch (e) {
+    alert( `Error al cargar reseñas: ${e.message}`);
+  }
 }
 
 async function submitReview() {
