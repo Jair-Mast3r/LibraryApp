@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { firestore, auth } from "@/firebase.js";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, QueryConstraint, FieldPath} from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 const user = ref(null);
@@ -36,11 +36,15 @@ const newReview = ref("");
 async function getReviews() {
   try {
     const reviewRef = collection(firestore, "reviews");
-    const docsSnapshot = await getDocs(reviewRef);
+    const reviewsQuery = query(
+      reviewRef,
+      where("bookId", "==", props.selectedBookId),
+    )
+    const docsSnapshot = await getDocs(reviewsQuery);  
     reviews.value = docsSnapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
-    }));
+        }));
     await getReviews();
   } catch (e) {
     alert( `Error al cargar reseñas: ${e.message}`);
