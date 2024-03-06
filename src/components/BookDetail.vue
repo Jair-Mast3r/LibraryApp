@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { firestore, auth } from "@/firebase.js";
-import { collection, addDoc, getDocs, query, where, QueryConstraint, FieldPath, orderBy, serverTimestamp, deleteDoc, doc } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, QueryConstraint, FieldPath, orderBy, serverTimestamp, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 const user = ref(null);
@@ -82,6 +82,25 @@ async function deleteReview(id) {
     alert(`Ocurrió un error al eliminar: ${e.message}`)
   }
 }
+
+async function editReview(id, content) {
+  const newContent = prompt("Escribe tu nueva reseña", content)
+  if (!newContent) {
+    alert("Debes poner algo");
+    return;
+  }
+  try {
+    const reviewRef = doc(firestore, "reviews", id)
+    await updateDoc(reviewRef, {
+      content: newContent,
+      updatedAt: serverTimestamp(),
+    });
+    await getReviews();
+  } catch (e) {
+    alert(`Ocurrio un error al editar: ${e.message}`)
+  }
+
+}
 </script>
 
 <template>
@@ -115,11 +134,12 @@ async function deleteReview(id) {
     <h2>Reseñas</h2>
     <div v-for="review in reviews" :key="review.id" v-show="reviews.length" class="review">
       <div>
-        escrito en el {{ review.createdAt.toDate().toLocale }}
+        Escrito el día {{ review.createdAt.toDate().toLocaleDateString() }}
       </div>
       <p>{{ review.userEmail }}</p>
       <p>{{ review.content }}</p>
       <div id="review-actions">
+        <button @click="editReview(review.id, review.content)">Editar</button>
         <button @click="deleteReview(review.id)">Eliminar</button>
       </div>
     </div>
