@@ -135,6 +135,7 @@ async function editReview(id, content) {
     <div v-for="review in reviews" :key="review.id" v-show="reviews.length" class="review">
       <div>
         Escrito el día {{ review.createdAt.toDate().toLocaleDateString() }}
+        <span v-if="review.updatedAt">- Editado </span>
       </div>
       <p>{{ review.userEmail }}</p>
       <p>{{ review.content }}</p>
