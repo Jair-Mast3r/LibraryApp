@@ -12,7 +12,7 @@ async function getBooks() {
     const request = await fetch('https://www.dbooks.org/api/recent');
     // Esperar hasta que la acción de arriba se complete
     const response = await request.json();
-    books.value = response.books;
+    books.value = response.books.filter((book) => !book.id.includes("X"));
     console.log(response.books)
 }
 
