@@ -38,7 +38,7 @@ async function getReviews() {
     const reviewsQuery = query(
       collection(firestore, "reviews"),
       where("bookId", "==", props.selectedBookId),
-      orderBy("createdAt", "desc"),
+      orderBy("createdAt", "asc"),
     );
     const docsSnapshot = await getDocs(reviewsQuery);
     reviews.value = docsSnapshot.docs.map((doc) => ({
@@ -139,7 +139,7 @@ async function editReview(id, content) {
       </div>
       <p>{{ review.userEmail }}</p>
       <p>{{ review.content }}</p>
-      <div id="review-actions">
+      <div id="review-actions" v-if="user.uid === review.userId">
         <button @click="editReview(review.id, review.content)">Editar</button>
         <button @click="deleteReview(review.id)">Eliminar</button>
       </div>
