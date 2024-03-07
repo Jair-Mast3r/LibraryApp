@@ -11,30 +11,53 @@ async function singingOut() {
 
 <template>
     <nav>
-            <h2>MyBooksApp</h2>
-            <div>
-                <span @click="emits('changePage', 'about-us')">Acerca de nosotros</span>
-                <span @click="emits('changePage', 'explore')">Explorar</span>
-                <span @click="emits('changePage', 'reviews')">Reseñas</span>
-                <span @click="singingOut">Cerrar sesión</span>
-            </div>
-        </nav>
+        <h2>MyBooksApp</h2>
+        <div>
+            <span @click="emits('changePage', 'about-us')">Acerca de nosotros</span>
+            <span @click="emits('changePage', 'explore')">Explorar</span>
+            <span @click="emits('changePage', 'reviews')">Reseñas</span>
+            <span @click="singingOut">Cerrar sesión</span>
+        </div>
+    </nav>
 </template>
 
 <style scoped>
-/* Navbar */
-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: gainsboro;
-    width: 100%;
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-nav > div > span {
-    margin-right: 20px;
+nav {
+    background-color: #282c34;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-nav > div > span:hover {
-    color:aliceblue;
+
+h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #61dafb;
 }
+
+div {
+    display: flex;
+    gap: 20px;
+}
+
+span {
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+span:hover {
+    color: #61dafb;
+}
+
 </style>
