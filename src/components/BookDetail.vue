@@ -1,8 +1,13 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import { firestore, auth } from "@/firebase.js";
+import { firestore, auth, storage } from "@/firebase.js";
 import { collection, addDoc, getDocs, query, where, QueryConstraint, FieldPath, orderBy, serverTimestamp, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import {
+    ref as storageRef,
+    uploadBytes,
+    getDownloadURL,
+} from "firebase/storage";
 
 const user = ref(null);
 
@@ -45,6 +50,7 @@ async function getReviews() {
       ...doc.data(),
       id: doc.id,
     }));
+    sideLoadImages();
     await getReviews();
   } catch (e) {
     alert(`Error al cargar reseñas: ${e.message}`);
@@ -81,6 +87,13 @@ async function deleteReview(id) {
   } catch (e) {
     alert(`Ocurrió un error al eliminar: ${e.message}`)
   }
+}
+
+function sideLoadImages() {
+  reviews.value.forEach(async (review) => {
+    const imgRef = storageRef(storage, `profilePictures/${review.userId}`);
+    review.userProfilePicture = await getDownloadURL(imgRef);
+  })
 }
 
 async function editReview(id, content) {
@@ -133,6 +146,7 @@ async function editReview(id, content) {
   <div>
     <h2>Reseñas</h2>
     <div v-for="review in reviews" :key="review.id" v-show="reviews.length" class="review">
+      <img :src="review.userProfilePicture ?? '/placeholder_profile.png'" alt="">
       <div>
         Escrito el día {{ review.createdAt.toDate().toLocaleDateString() }}
         <span v-if="review.updatedAt">- Editado </span>
