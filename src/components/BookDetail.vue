@@ -163,8 +163,6 @@ h2 {
   margin: auto;
 }
 
-.book-detial-container {}
-
 span {
   font-weight: 600px;
 }

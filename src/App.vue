@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage.vue"
 import NavBar from "./components/NavBar.vue"
 import ExplorePage from "./pages/ExplorePage.vue"
 import AboutUs from "./pages/AboutUs.vue";
+import ProfilePage from "./pages/ProfilePage.vue";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase.js"
 
@@ -43,6 +44,8 @@ function changePage(page) {
         </section>
         
         <ExplorePage v-if="pageShown === 'explore'" @hide-login="isUserAuthenticated = true"/>
+
+        <ProfilePage v-if="pageShown === 'profile'" @hide-login="isUserAuthenticated = true"/>
 
         <section v-if="pageShown === 'reviews'">
             <h2>Reseñas</h2>

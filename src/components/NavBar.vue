@@ -16,6 +16,7 @@ async function singingOut() {
             <span @click="emits('changePage', 'about-us')">Acerca de nosotros</span>
             <span @click="emits('changePage', 'explore')">Explorar</span>
             <span @click="emits('changePage', 'reviews')">Reseñas</span>
+            <span @click="emits('changePage', 'profile')">Perfil</span>
             <span @click="singingOut">Cerrar sesión</span>
         </div>
     </nav>
