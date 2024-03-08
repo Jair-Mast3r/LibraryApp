@@ -4,9 +4,9 @@ import { firestore, auth, storage } from "@/firebase.js";
 import { collection, addDoc, getDocs, query, where, QueryConstraint, FieldPath, orderBy, serverTimestamp, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import {
-    ref as storageRef,
-    uploadBytes,
-    getDownloadURL,
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
 } from "firebase/storage";
 
 const user = ref(null);
@@ -145,24 +145,26 @@ async function editReview(id, content) {
   </div>
   <div>
     <h2>Reseñas</h2>
-    <div v-for="review in reviews" :key="review.id" v-show="reviews.length" class="review">
-      <img :src="review.userProfilePicture ?? '/placeholder_profile.png'" alt="">
-      <div>
-        Escrito el día {{ review.createdAt.toDate().toLocaleDateString() }}
-        <span v-if="review.updatedAt">- Editado </span>
+    <div class="container">
+      <div v-for="review in reviews" :key="review.id" v-show="reviews.length" class="review">
+        <img class="profilePictures" :src="review.userProfilePicture ?? '/placeholder_profile.png'" alt="">
+        <div>
+          Escrito el día {{ review.createdAt.toDate().toLocaleDateString() }}
+          <span v-if="review.updatedAt">- Editado </span>
+        </div>
+        <p>{{ review.userEmail }}</p>
+        <p>{{ review.content }}</p>
+        <div id="review-actions" v-if="user.uid === review.userId">
+          <button @click="editReview(review.id, review.content)">Editar</button>
+          <button @click="deleteReview(review.id)">Eliminar</button>
+        </div>
       </div>
-      <p>{{ review.userEmail }}</p>
-      <p>{{ review.content }}</p>
-      <div id="review-actions" v-if="user.uid === review.userId">
-        <button @click="editReview(review.id, review.content)">Editar</button>
-        <button @click="deleteReview(review.id)">Eliminar</button>
-      </div>
+      <div v-show="!reviews.length">No hay reseñas</div>
+      <form @submit.prevent="submitReview">
+        <textarea :placeholder="`Escribe una reseña para ${book?.title}`" v-model="newReview" />
+        <button type="submit">Enviar</button>
+      </form>
     </div>
-    <div v-show="!reviews.length">No hay reseñas</div>
-    <form @submit.prevent="submitReview">
-      <textarea :placeholder="`Escribe una reseña para ${book?.title}`" v-model="newReview" />
-      <button type="submit">Enviar</button>
-    </form>
   </div>
 </template>
 
